@@ -8,6 +8,7 @@ class CalcControler{
         this._dateEl = document.querySelector("#data");
         this._timeEl = document.querySelector("#hora");
         this.initialize();
+        this.initButtonsEvents();
     }
 
     initialize(){
@@ -29,6 +30,33 @@ class CalcControler{
         });
         this.displayTime = this.currentDate.toLocaleTimeString(this._locale);
     }
+
+    addEventListenerAll(element, events, fn){
+        
+        events.split(' ').forEach(event => { //split separa em uma array os nomes dos eventos para o forEach 
+            element.addEventListener(event, fn, false);
+        });
+    
+    }
+
+    initButtonsEvents(){
+        let buttons = document.querySelectorAll('#buttons > g, #parts > g');//Seleciona todos da tag com id buttons que são tag g   
+        buttons.forEach(btn=>{ //percorre a lista de bottons e para cada botão encontrado execulta o addEventListener 
+
+            this.addEventListenerAll(btn,'click drag', e=>{
+                console.log(btn.className.baseVal.replace("btn-","")); //Pega o nome da classe e substitui btn- por vazio
+            });
+
+            this.addEventListenerAll(btn,'mouseover mouseup mousedown', e=>{
+
+                btn.style.cursor = "pointer"; //muda o cursor parra a mão de click
+
+            });
+
+        })
+    }
+
+
 
     get displayCalc(){ // consulta o valor do atributo privado
         return this._displayCalcEl.innerHTML
