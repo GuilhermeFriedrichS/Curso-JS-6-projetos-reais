@@ -62,34 +62,78 @@ class CalcControler{
     setLastOperation(value){
 
         this._operation[this._operation.length-1] = value;
-        this.displayCalc = value;
+        
 
     }
 
+    pushOperation(value){
+
+        this._operation.push(value);
+        if (this._operation.length > 3){
+            
+            this.calc();
+        
+        }
+    }
+    
+    calc(){
+
+        let last = this._operation.pop();
+
+        let result = eval(this._operation.join(""));
+
+        this._operation = [result, last]
+
+        this.setLastNumberToDisplay()
+    }
+
+    setLastNumberToDisplay(){
+
+        let lastNumber;
+
+        for(let i = this._operation.length-1; i>=0; i--){
+            if(!this.isOperator(this._operation[i])){
+                lastNumber = this._operation[i];
+                break;
+            };
+        }
+        this.displayCalc = lastNumber;
+    };
+
     addOperation(value){
+
         if(isNaN(this.getLastOperation())){
 
             if(this.isOperator(value)){
 
                 this.setLastOperation(value);
+                console.log(this._operation);
 
             }else if(isNaN(value)){
-
-                console.log(value);
+                
+                console.log('Outra coisa',value);
+                
                 
             }else{
-                this._operation.push(value);
-                this.displayCalc = value;
+                this.pushOperation(value);
+                this.setLastNumberToDisplay()
             }
 
         }else{
-            let newValue = this.getLastOperation().toString() + value.toString();
-            this.setLastOperation(parseInt(newValue)); //push() adiciona o valor no final da array e pop() para excluir
+
+            if(this.isOperator(value)){
+                this.pushOperation(value);
+                console.log(this._operation);
+            }else{
+                let newValue = this.getLastOperation().toString() + value.toString();
+                this.setLastOperation(parseInt(newValue)); //push() adiciona o valor no final da array e pop() para excluir
+               
+            }
+            this.setLastNumberToDisplay();
+
+            
+
         }
-
-
-       
-        console.log(this._operation);
     }
 
     setError(){
