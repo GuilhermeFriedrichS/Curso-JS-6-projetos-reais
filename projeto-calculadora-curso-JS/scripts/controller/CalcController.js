@@ -13,6 +13,7 @@ class CalcControler{
         this._timeEl = document.querySelector("#hora");
         this.initialize();
         this.initButtonsEvents();
+        this.initKeyBoard();
         
     }
 
@@ -26,6 +27,79 @@ class CalcControler{
 
         },1000); //execulta a função dentro deste intervalo
         this.setLastNumberToDisplay();
+        this.pasteFromClipboard()
+    }
+    initKeyBoard(){
+
+        document.addEventListener('keyup', e=>{
+
+            switch (e.key){
+                case 'Escape':
+                    this.clearAll();
+                    break;
+                case 'Backspace':
+                    this.clearEntry();
+                    break;
+                case '+':
+                case '-':
+                case '/':
+                case '*':
+                case '%':
+                    this.addOperation(e.key);
+                    break;
+                case 'Enter':
+                case '=':
+                    this.calc();
+                    break;
+                case '.':
+                case ',':
+                    this.addDot();
+                    break;
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                    this.addOperation(parseInt(e.key));
+                    break;
+                case 'c':
+                    if(e.ctrlKey) this.copyToClipboard();
+            }
+            
+        })
+
+    }
+
+    pasteFromClipboard(){
+        
+        document.addEventListener('paste', e=>{
+
+            let text = e.clipboardData.getData('text');
+
+            this.displayCalc = parseFloat(text);
+        })
+
+    }
+
+    copyToClipboard(){
+
+        let input = document.createElement('input');
+
+        input.value = this.displayCalc;
+
+        document.body.appendChild(input);
+
+        input.select();
+
+        document.execCommand("Copy");
+
+        input.remove();
+
     }
 
     setdisplayDateTime(){
