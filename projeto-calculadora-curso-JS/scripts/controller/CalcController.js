@@ -48,6 +48,8 @@ class CalcControler{
     clearAll(){
 
         this._operation = [];
+        this._lastNumber = []
+        this._lastOperator = [];
         this.setLastNumberToDisplay();
 
     }
@@ -175,11 +177,6 @@ class CalcControler{
                 this.setLastOperation(value);
                 
 
-            }else if(isNaN(value)){
-                
-                console.log('Outra coisa',value);
-                
-                
             }else{
                 this.pushOperation(value);
                 this.setLastNumberToDisplay()
@@ -192,7 +189,7 @@ class CalcControler{
                 
             }else{
                 let newValue = this.getLastOperation().toString() + value.toString();
-                this.setLastOperation(parseInt(newValue)); //push() adiciona o valor no final da array e pop() para excluir
+                this.setLastOperation(newValue); //push() adiciona o valor no final da array e pop() para excluir
                
             }
             this.setLastNumberToDisplay();
@@ -202,6 +199,20 @@ class CalcControler{
     setError(){
         this.displayCalc="Error";
     }
+
+    addDot(){
+        let lastOpertation = this.getLastOperation();
+
+        if (typeof lastOpertation === 'string' && lastOpertation.split('').indexOf('.') > -1) return;
+
+        if(this.isOperator(lastOpertation) || !lastOpertation){
+            this.pushOperation("0.");
+        }else {
+            this.setLastOperation(lastOpertation.toString()+'.')
+        }
+        
+        this.setLastNumberToDisplay();
+    };
 
     execBtn(value){
 
@@ -230,8 +241,8 @@ class CalcControler{
             case 'igual':
                 this.calc();
                 break;
-            case '.':
-                this.addOperation('.');
+            case 'ponto':
+                this.addDot();
                 break;
             case '0':
             case '1':
