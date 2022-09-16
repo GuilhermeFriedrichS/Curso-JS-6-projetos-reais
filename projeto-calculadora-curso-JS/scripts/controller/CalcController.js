@@ -2,6 +2,9 @@ class CalcControler{
 
     constructor(){
 
+        this._lastOperator = '';
+        this._lastNumber = 0;
+
         this._operation = [];
         this._locale = 'pt-BR'
         this._currentDate; //O _ faz atributos privados
@@ -22,6 +25,7 @@ class CalcControler{
             this.setdisplayDateTime();
 
         },1000); //execulta a função dentro deste intervalo
+        this.setLastNumberToDisplay();
     }
 
     setdisplayDateTime(){
@@ -42,10 +46,16 @@ class CalcControler{
     }
 
     clearAll(){
+
         this._operation = [];
+        this.setLastNumberToDisplay();
+
     }
     clearEntry(){
+
         this._operation.pop();
+        this.setLastNumberToDisplay();
+
     }
     
     getLastOperation(){
@@ -76,27 +86,83 @@ class CalcControler{
         }
     }
     
+    getResult(){
+        
+        return eval(this._operation.join(""));
+        
+
+    }
+
     calc(){
 
-        let last = this._operation.pop();
+        let last = '';
 
-        let result = eval(this._operation.join(""));
+        this._lastOperator = this.getLastItem();
 
-        this._operation = [result, last]
+        if(this._operation.length < 3 ){
 
-        this.setLastNumberToDisplay()
+            let firstItem = this._operation[0];
+            this._operation = [firstItem, this._lastOperator, this._lastNumber]
+
+        }
+
+        if (this._operation.length > 3){
+
+            last = this._operation.pop();
+            this._lastNumber = this.getResult();
+
+        }else if(this._operation.length == 3){
+
+            this._lastNumber = this.getLastItem(false);
+
+        }
+
+        let result = this.getResult();
+
+        if (last == '%'){
+
+            result /= 100;
+
+            this._operation = [result];
+
+        }else{
+
+            this._operation = [result];
+
+            if (last) this._operation.push(last);
+        }
+
+        this.setLastNumberToDisplay();
+    }
+
+    getLastItem(isOperator = true){
+
+        let lastItem;
+
+        for(let i = this._operation.length-1; i>=0; i--){
+
+            if(this.isOperator(this._operation[i]) == isOperator){
+                lastItem = this._operation[i];
+                break;
+            };
+           
+        }
+
+        if(!lastItem){
+
+            lastItem = (isOperator) ? this._lastOperator : this.lastNumber;
+
+        }
+
+        return lastItem;
     }
 
     setLastNumberToDisplay(){
 
-        let lastNumber;
+        let lastNumber = this.getLastItem(false);
 
-        for(let i = this._operation.length-1; i>=0; i--){
-            if(!this.isOperator(this._operation[i])){
-                lastNumber = this._operation[i];
-                break;
-            };
-        }
+        if (!lastNumber) lastNumber = 0;
+
         this.displayCalc = lastNumber;
     };
 
@@ -107,7 +173,7 @@ class CalcControler{
             if(this.isOperator(value)){
 
                 this.setLastOperation(value);
-                console.log(this._operation);
+                
 
             }else if(isNaN(value)){
                 
@@ -123,16 +189,13 @@ class CalcControler{
 
             if(this.isOperator(value)){
                 this.pushOperation(value);
-                console.log(this._operation);
+                
             }else{
                 let newValue = this.getLastOperation().toString() + value.toString();
                 this.setLastOperation(parseInt(newValue)); //push() adiciona o valor no final da array e pop() para excluir
                
             }
             this.setLastNumberToDisplay();
-
-            
-
         }
     }
 
@@ -165,7 +228,7 @@ class CalcControler{
                 this.addOperation('%');
                 break;
             case 'igual':
-                
+                this.calc();
                 break;
             case '.':
                 this.addOperation('.');
@@ -196,7 +259,7 @@ class CalcControler{
             this.addEventListenerAll(btn,'click drag', e=>{
                 let textbtn = btn.className.baseVal.replace("btn-",""); //Pega o nome da classe e substitui btn- por vazio
                 this.execBtn(textbtn);
-                console.log(textbtn);
+                
                 
             });
 
