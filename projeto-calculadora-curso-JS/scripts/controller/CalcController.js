@@ -4,7 +4,8 @@ class CalcControler{
 
         this._lastOperator = '';
         this._lastNumber = 0;
-
+        this._audio = new Audio('click.mp3');
+        this._audioOnOff = false;
         this._operation = [];
         this._locale = 'pt-BR'
         this._currentDate; //O _ faz atributos privados
@@ -28,10 +29,41 @@ class CalcControler{
         },1000); //execulta a função dentro deste intervalo
         this.setLastNumberToDisplay();
         this.pasteFromClipboard()
+
+        document.querySelectorAll('.btn-ac').forEach(btn=>{
+
+            btn.addEventListener('dblclick', e=>{
+
+                this.toggleAudio();
+
+            });
+
+        });
+
     }
+
+    toggleAudio(){
+
+        this._audioOnOff = !this._audioOnOff;
+
+    }
+
+    playAudio(){
+
+        if (this._audioOnOff){
+
+            this._audio.currentTime = 0;
+            this._audio.play();
+
+        }
+
+    }
+
     initKeyBoard(){
 
         document.addEventListener('keyup', e=>{
+
+            this.playAudio();
 
             switch (e.key){
                 case 'Escape':
@@ -164,7 +196,17 @@ class CalcControler{
     
     getResult(){
         
-        return eval(this._operation.join(""));
+        try{  
+
+            return eval(this._operation.join(""));
+        }catch(e){
+            setTimeout(()=>{
+
+                this.setError();
+
+            }, 1);
+            
+        }
         
 
     }
@@ -289,7 +331,8 @@ class CalcControler{
     };
 
     execBtn(value){
-
+        
+        this.playAudio();
         switch (value){
             case 'ac':
                 this.clearAll();
@@ -339,12 +382,12 @@ class CalcControler{
 
     initButtonsEvents(){
         let buttons = document.querySelectorAll('#buttons > g, #parts > g');//Seleciona todos da tag com id buttons que são tag g   
-        buttons.forEach(btn=>{ //percorre a lista de bottons e para cada botão encontrado execulta o addEventListener 
+        buttons.forEach((btn, index)=>{ //percorre a lista de bottons e para cada botão encontrado execulta o addEventListener 
 
             this.addEventListenerAll(btn,'click drag', e=>{
                 let textbtn = btn.className.baseVal.replace("btn-",""); //Pega o nome da classe e substitui btn- por vazio
-                this.execBtn(textbtn);
                 
+                this.execBtn(textbtn);  
                 
             });
 
@@ -354,7 +397,7 @@ class CalcControler{
 
             });
 
-        })
+        });
     }
 
 
@@ -363,6 +406,12 @@ class CalcControler{
         return this._displayCalcEl.innerHTML
     }
     set displayCalc(value){ // atribui o valor do atributo privado, sempre que criar um atributo privado é preciso criar get e set
+
+        if(value.toString().length > 10 ){
+            this.setError();
+            return false;
+        }
+
         this._displayCalcEl.innerHTML = value;
     }
 
