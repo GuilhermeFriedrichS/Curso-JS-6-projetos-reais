@@ -1,20 +1,29 @@
 //var gender  = document.querySelectorAll("#form-user-create [name=gender]:checked"); //Seleciona no formulario com esse id o input com o nome gender que está selecionado
 
 var fields = document.querySelectorAll("#form-user-create [name]");
+var user = {};
 
-fields.forEach(function(field, index){
+document.getElementById("form-user-create").addEventListener("submit", function(event){
 
-    if(field.name == "gender"){
+    event.preventDefault(); //cancela a atualização da pagina do metodo post do form
 
-        if(field.checked){
+    fields.forEach(function(field, index){
 
-            console.log("Sim",field);
-
+        if(field.name == "gender"){
+    
+            if(field.checked){
+    
+                user[field.name] = field.value;
+    
+            }
+    
+        }else{
+    
+            user[field.name] = field.value;
         }
+    
+    
+    });
+    console.log(user);
 
-    }else{
-        console.log("Não")
-    }
-
-
-});
+})
