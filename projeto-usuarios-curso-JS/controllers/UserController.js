@@ -86,27 +86,40 @@ class UserController {
     getValues(){
 
             let user = {};
+            let isValid = true;
+
             [...this.formEl.elements].forEach(function(field, index){ //[...] Serve para transformar objeto em uma array independente de quantos elementos ele tem, para que o forEach funcione
 
-            if(field.name == "gender"){
-        
-                if(field.checked){
-        
-                    user[field.name] = field.value;
-        
+                if(['name', 'email', 'password'].indexOf(field.name) > -1 && !field.value){
+                    
+                    field.parentElement.classList.add('has-error');
+                    isValid = false
+
                 }
-        
-            }else if (field.name == "admin"){
 
-                user[field.name] = field.checked;
+                if(field.name == "gender"){
+            
+                    if(field.checked){
+            
+                        user[field.name] = field.value;
+            
+                    }
+            
+                }else if (field.name == "admin"){
 
-            } else{
-        
-                user[field.name] = field.value;
-            }
+                    user[field.name] = field.checked;
+
+                } else{
+            
+                    user[field.name] = field.value;
+                }
         
         
         });
+        
+        if(!isValid){
+            return false;
+        }
         return new User(
             user.name,
             user.gender,
