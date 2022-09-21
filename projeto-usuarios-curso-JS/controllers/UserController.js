@@ -51,6 +51,8 @@ class UserController {
 
                     user.loadFromJSON(result);
 
+                    user.save();
+
                     this.getTr(user, tr);
 
                     this.updateCount();
@@ -87,8 +89,8 @@ class UserController {
                 (content)=>{
 
                     values.photo = content;
-                    
-                    this.insert(values);
+
+                    values.save();
 
                     this.addLine(values);
 
@@ -224,19 +226,6 @@ class UserController {
             this.addLine(user);
 
         });
-
-    }
-
-
-    
-    insert(data){
-
-        let users = this.getUsersStorage();
-
-        users.push(data);
-
-        //sessionStorage.setItem("users", JSON.stringify(users)); Para adicionar informações que perde com F5
-        localStorage.setItem("users", JSON.stringify(users)); // Para informações que só perde limpando o navegador
 
     }
 
