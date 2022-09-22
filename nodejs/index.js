@@ -1,11 +1,14 @@
 const express = require('express');
-let routesIndex = require('./routes/index');
-let routesUsers = require('./routes/users');
+const consign = require('consign');
+const bodyParser = require('body-parser');
 
 let app = express();
 
-app.use(routesIndex);
-app.use('/users', routesUsers);
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json()); //Transforma todos dados recebidos em json
+
+consign().include('routes').into(app);
+
 
 app.listen(3000, '127.0.0.1', ()=>{
 
