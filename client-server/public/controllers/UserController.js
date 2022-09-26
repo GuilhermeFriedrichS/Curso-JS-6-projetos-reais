@@ -22,7 +22,7 @@ class UserController {
 
         this.formUpdateEl.addEventListener("submit", event => {
 
-            event.preventDefault();
+            event.preventDefault(); //cancela a atualização da pagina do metodo post do form
 
             let btn = this.formUpdateEl.querySelector("[type=submit]");
 
@@ -79,7 +79,7 @@ class UserController {
 
         this.formEl.addEventListener("submit", event => {
 
-            event.preventDefault(); //cancela a atualização da pagina do metodo post do form
+            event.preventDefault();
 
             let btn = this.formEl.querySelector("[type=submit]");
 
@@ -120,7 +120,7 @@ class UserController {
 
             let fileReader = new FileReader();
 
-            let elements = [...formEl.elements].filter(item => { 
+            let elements = [...formEl.elements].filter(item => {
 
                 if (item.name === 'photo') {
                     return item;
@@ -157,7 +157,7 @@ class UserController {
         let user = {};
         let isValid = true;
 
-        [...formEl.elements].forEach(function (field, index) {//[...] Serve para transformar objeto em uma array independente de quantos elementos ele tem, para que o forEach funcione
+        [...formEl.elements].forEach(function (field, index) { //[...] Serve para transformar objeto em uma array independente de quantos elementos ele tem, para que o forEach funcione
 
             if (['name', 'email', 'password'].indexOf(field.name) > -1 && !field.value) {
 
@@ -205,7 +205,6 @@ class UserController {
 
         //let users = User.getUsersStorage();
 
-
         HttpRequest.get('/users').then(data => {
 
             data.users.forEach(dataUser => {
@@ -232,7 +231,7 @@ class UserController {
 
     }
 
-    getTr(dataUser, tr = null){//tr valor opcional
+    getTr(dataUser, tr = null){ //tr valor opcional
 
         if (tr === null) tr = document.createElement('tr');
 
@@ -282,7 +281,7 @@ class UserController {
 
             this.formUpdateEl.dataset.trIndex = tr.sectionRowIndex;
 
-            for (let name in json) {//laço que percorre um objeto
+            for (let name in json) { //laço que percorre um objeto
 
                 let field = this.formUpdateEl.querySelector("[name=" + name.replace("_", "") + "]");
 

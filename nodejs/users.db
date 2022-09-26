@@ -1,9 +1,3 @@
-{"_name":"Guilherme 2","_email":"teste2@gmail.com","_id":"1CAaEt5YOd9HUcsC"}
-{"_name":"teste","_gender":"M","_birth":"2022-08-30","_country":"United States","_email":"teste@teste.com","_password":"1413","_photo":"dist/img/boxed-bg.jpg","_admin":true,"_register":"2022-09-26T13:18:31.471Z","_id":"AOKrPUTmMlyXFYrm"}
-{"_name":"Gui teste","_gender":"M","_birth":"2022-09-27","_country":"United Kingdom","_email":"teste@teste.com","_password":"d1w1","_photo":"dist/img/boxed-bg.jpg","_admin":true,"_register":"2022-09-26T13:22:20.301Z","_id":"BL7zYmKcyOMxYGci"}
-{"_name":"Guilherme teste","_email":"teste@teste.com","_id":"TI2ixFL2lL1jM1GW"}
-{"_name":"teste","_email":"_email@teste.com","_id":"a3ZajrSabcxHLisT"}
-{"_name":"Guilherme Friedrich","_email":"teste@gmail.com","_id":"asgIObFZUcxmmLr3"}
-{"_name":"Gui","_gender":"M","_birth":"2022-08-31","_country":"Antigua and Barbuda","_email":"teste@teste.com","_password":"591","_photo":"dist/img/boxed-bg.jpg","_admin":true,"_register":"2022-09-26T13:11:20.266Z","_id":"ugvs3nEsBwzdeVwe"}
-{"_name":"gui2","_gender":"M","_birth":"2022-08-31","_country":"United Kingdom","_email":"teste@teste.com","_password":"14123","_photo":"dist/img/boxed-bg.jpg","_admin":true,"_register":"2022-09-26T13:27:19.961Z","_id":"s94uTkS17JhcQzTo"}
-{"_name":"Guilherme","_gender":"M","_birth":"2022-10-05","_country":"","_email":"teste@teste.com","_password":"2143","_photo":"dist/img/boxed-bg.jpg","_admin":true,"_register":"2022-09-26T13:32:26.365Z","_id":"vEOl1OpgBUvT5UwZ"}
+{"_name":"Guilherme 2","_gender":"M","_birth":"2022-09-21","_country":"Brazil","_email":"Teste@gmail.com","_password":"159","_photo":"dist/img/boxed-bg.jpg","_admin":true,"_register":"2022-09-26T14:38:03.367Z","_id":"kvx8lnUbQxibf1Te"}
+{"_name":"Guilherme 22","_gender":"M","_birth":"2022-09-21","_country":"Brazil","_email":"Teste@gmail.com","_password":"159","_photo":"dist/img/boxed-bg.jpg","_admin":true,"_register":"2022-09-26T14:46:52.818Z","_id":"kvx8lnUbQxibf1Te"}
+{"_name":"Guilherme","_gender":"M","_birth":"2022-09-26","_country":"United Kingdom","_email":"teste@gmail.com","_password":"124123123","_photo":"dist/img/boxed-bg.jpg","_admin":true,"_register":"2022-09-26T14:47:23.448Z","_id":"yyL6RgaNb4yvYYiO"}
