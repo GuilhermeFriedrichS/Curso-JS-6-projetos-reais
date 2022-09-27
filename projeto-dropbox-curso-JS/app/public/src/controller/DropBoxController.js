@@ -1,5 +1,6 @@
 class DropBoxController {
 
+        
     constructor(){
 
         this.btnSendFileEl = document.querySelector('#btn-send-file');
@@ -9,7 +10,25 @@ class DropBoxController {
         this.namefileEl = this.snackModalEl.querySelector('.filename');
         this.timeleftEl = this.snackModalEl.querySelector('.timeleft');
 
+        this.connectFirebase();
         this.initEvents();
+
+    }
+
+    connectFirebase(){
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBSJoX_5TqzQqqQi1X3NWpF6K8KF-qqu9o",
+            authDomain: "drobox-clone-dceaa.firebaseapp.com",
+            databaseURL: "https://drobox-clone-dceaa-default-rtdb.firebaseio.com",
+            projectId: "drobox-clone-dceaa",
+            storageBucket: "drobox-clone-dceaa.appspot.com",
+            messagingSenderId: "334356921909",
+            appId: "1:334356921909:web:1831cbd00408fa4adafb7c",
+            measurementId: "G-JVLCRZXJNL"
+        };
+
+        firebase.initializeApp(firebaseConfig);
 
     }
 
