@@ -9,9 +9,11 @@ class DropBoxController {
         this.progessBarEl = this.snackModalEl.querySelector('.mc-progress-bar-fg');
         this.namefileEl = this.snackModalEl.querySelector('.filename');
         this.timeleftEl = this.snackModalEl.querySelector('.timeleft');
+        this.listFilesEl = document.querySelector('#list-of-files-and-directories'); 
 
         this.connectFirebase();
         this.initEvents();
+        this.readFiles();
 
     }
 
@@ -181,7 +183,8 @@ class DropBoxController {
     }
 
     getFileIconView(file) {
-        switch (file.type) {
+      console.log(file);
+        switch (file.mimetype) {
           case 'folder':
             return `<svg width="160" height="160" viewBox="0 0 160 160" class="mc-icon-template-content tile__preview tile__preview--icon">
                 <title>content-folder-large</title>
@@ -338,15 +341,35 @@ class DropBoxController {
         }
     }
 
-    getFileView(file){
+    getFileView(file, key) {
 
-        return `
-            <li>
-                ${this.getFileIconView(file)}
-                <div class="name text-center">Meus Documentos</div>
-            </li>
-        `;
-
+      let li = document.createElement('li')
+  
+      li.dataset.key = key
+      li.innerHTML = `
+        ${this.getFileIconView(file)}
+        <div class="name text-center">${file.originalFilename}</div>
+      ` 
+  
+      return li;
     }
 
+    readFiles(){
+
+      this.getFireBaseRef().on('value', snapshot => {
+
+        this.listFilesEl.innerHTML = '';
+
+        snapshot.forEach(snapshotItem => {
+
+          let key = snapshotItem.key;
+          let data = snapshotItem.val();
+
+          this.listFilesEl.appendChild(this.getFileView(data, key))
+
+        })
+
+      })
+
+    }
 }
