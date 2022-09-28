@@ -42,13 +42,42 @@ class DropBoxController {
 
         this.inputFilesEl.addEventListener('change', event =>{
 
-            this.uploadTask(event.target.files);
+            this.btnSendFileEl.disabled = true;
+
+            this.uploadTask(event.target.files).then(responses => {
+
+              responses.forEach(resp => {
+
+                this.getFireBaseRef().push().set(resp.files['input-file']); // Quando o atributo tem "-" para não dar erro temos que colocar entre [''], O firebase é parecido com uma Array de JSONS, mas não estamos enviado os arquivos, só as informações dos arquivos para listar
+
+              });
+
+              this.uploadComplete();
+
+            }).catch(err=>{
+
+              this.uploadComplete();
+              console.log(err);
+
+            });
 
             this.modalShow();
 
-            this.inputFilesEl.value = '';
-
         });
+
+    }
+
+    uploadComplete(){
+
+      this.modalShow(false);
+      this.inputFilesEl.value = '';
+      this.btnSendFileEl.disabled = false;
+
+    }
+
+    getFireBaseRef(){
+
+      return firebase.database().ref('files');
 
     }
 
@@ -72,8 +101,6 @@ class DropBoxController {
 
                 ajax.onload = event =>{
 
-                    this.modalShow(false);
-
                     try{
                         resolve(JSON.parse(ajax.responseText));
                     }catch(e) {
@@ -90,7 +117,6 @@ class DropBoxController {
 
                 ajax.onerror = event => {
                     
-                    this.modalShow(false);
                     reject(event);
 
                 };
