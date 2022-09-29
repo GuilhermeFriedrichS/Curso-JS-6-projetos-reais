@@ -3,6 +3,8 @@ class DropBoxController {
         
     constructor(){
 
+        this.currentFolder = ['pasta'];
+
         this.oneselection = new Event('selectionchange');
 
         this.btnSendFileEl = document.querySelector('#btn-send-file');
@@ -69,6 +71,22 @@ class DropBoxController {
     }
 
     initEvents(){
+
+      this.btnNewFolder.addEventListener('click', e=>{
+
+        let originalFilename = prompt('Nome da nova pasta:');
+
+        if(originalFilename){
+
+          this.getFireBaseRef().push().set({
+            originalFilename,
+            mimetype:'folder',
+            path:this.currentFolder.join('/')
+          })  
+
+        }
+
+      });
 
       this.btnDelete.addEventListener('click', e=> {
 
@@ -284,6 +302,7 @@ class DropBoxController {
     }
 
     getFileIconView(file) {
+      console.log(file);
         switch (file.mimetype) {
           case 'folder':
             return `<svg width="160" height="160" viewBox="0 0 160 160" class="mc-icon-template-content tile__preview tile__preview--icon">
