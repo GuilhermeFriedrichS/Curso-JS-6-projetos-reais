@@ -317,8 +317,28 @@ class WhatsAppController{
                     img.classList.add(name);
 
                 });
+ 
+                let cursor = window.getSelection();
 
-                this.el.inputText.appendChild(img);
+                if(!cursor.focusNode || !cursor.focusNode.id == 'input-text'){
+
+                    this.el.input.focus();
+                    cursor = window.getSelection();
+                }
+
+                let range = document.createRange();
+
+                range = cursor.getRangeAt(0);
+                range.deleteContents();
+
+                let frag = document.createDocumentFragment();
+
+                frag.appendChild(img);
+
+                range.insertNode(frag);
+
+                range.setStartAfter(img);
+
                 this.el.inputText.dispatchEvent(new Event('keyup')); //força o evento keyup
 
             })
