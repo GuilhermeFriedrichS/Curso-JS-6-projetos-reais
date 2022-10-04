@@ -214,12 +214,13 @@ export class WhatsAppController{
 
             this.closeAllMainPanel();
             this.el.panelMessagesContainer.show();
+            this._camera.stop();
 
         });
 
         this.el.btnTakePicture.on('click', e=>{
            
-            console.log('take picture')
+            console.log('take picture');
 
         });
 

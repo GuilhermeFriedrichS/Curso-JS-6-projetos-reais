@@ -3,16 +3,29 @@ export class CameraController {
     constructor(videoEl){
 
         this._videoEl = videoEl;
+        this._videoEl.setAttribute('autoplay', '');
 
         navigator.mediaDevices.getUserMedia({
-            video:true
+            video: true
         }).then(stream=>{
-
-            this._videoEl.src = URL.createObjectURL(stream);
-            this._videoEl.play();
+            
+            this._stream = stream;
+            console.log(stream);
+            this._videoEl.srcObject=stream;
+            
 
         }).catch(err=>{
             console.error(err);
         });
+    }
+
+    stop(){
+
+        this._stream.getTracks().forEach(track => {
+            
+            track.stop();
+
+        });
+
     }
 }
