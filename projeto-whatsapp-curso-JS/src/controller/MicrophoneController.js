@@ -1,6 +1,10 @@
-export class MicrophoneController {
+import { ClassEvent } from "../util/ClassEvent";
+
+export class MicrophoneController extends ClassEvent {
 
     constructor(){
+
+        super(); //Execulta o construtor da classe ClassEvent, porque esse construtor sobrescreve o da outra
 
         navigator.mediaDevices.getUserMedia({
             audio: true
@@ -13,6 +17,8 @@ export class MicrophoneController {
             audio.srcObject=stream;
 
             audio.play();     
+
+            this.trigger('play', audio);
 
         }).catch(err=>{
             console.error(err);
