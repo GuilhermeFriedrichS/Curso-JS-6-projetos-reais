@@ -253,13 +253,17 @@ export class WhatsAppController{
             this.closeAllMainPanel();
             this.el.panelDocumentPreview.addClass('open');
             this.el.panelDocumentPreview.css({
-                'height':'100%'
+                'height':'calc(100% - 120px)'
             });
             this.el.inputDocument.click();
 
         });
 
         this.el.inputDocument.on('change', e=>{
+
+            this.el.panelDocumentPreview.css({
+                'height':'1%'
+            });
 
             if (this.el.inputDocument.files.length){
 
@@ -274,7 +278,14 @@ export class WhatsAppController{
                     this.el.imagePanelDocumentPreview.show();
                     this.el.filePanelDocumentPreview.hide();
 
+                    this.el.panelDocumentPreview.css({
+                        'height':'100%'
+                    });
+
                 }).catch(err=>{
+                    this.el.panelDocumentPreview.css({
+                        'height':'100%'
+                    });
 
                     console.log(file.type);
                     switch (file.type){

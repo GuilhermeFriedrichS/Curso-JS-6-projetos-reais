@@ -16145,3 +16145,8 @@ html[dir=rtl] ._2ICcy:after{
     width: auto;
     text-align: center;
 }
+#img-panel-document-preview{
+    width: auto;
+    height: auto;
+    margin-top: 50%;
+}
