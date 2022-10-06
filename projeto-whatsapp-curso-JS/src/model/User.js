@@ -49,6 +49,13 @@ export class User extends Model{
         return Firebase.db().collection('/users');
 
     }
+    static getContactsRef(id){
+
+        return User.getRef()
+            .doc(id)
+            .collection('contacts');
+
+    }
 
     static findByEmail(email){
 
@@ -58,11 +65,37 @@ export class User extends Model{
 
     addContact(contact){
 
-        return User.getRef()
-            .doc(this.email)
-            .collection('contacts')
+        return User.getContactsRef(this.email)
             .doc(btoa(contact.email))
             .set(contact.toJSON());
+
+    }
+
+    getContacts(){
+
+        return new Promise((s, f) =>{
+
+            User.getContactsRef(this.email).onSnapshot(docs =>{
+
+                let contacts = [];
+
+                contacts.forEach(doc => {
+
+                    let data = doc.data();
+
+                    data.id = doc.id;
+                    
+                    contacts.push(data);
+
+                });
+
+                this.trigger('contactschange', docs);
+
+                s(contacts);
+
+            })
+
+        })
 
     }
 
