@@ -25,4 +25,21 @@ export class Format {
         }
 
     }
+
+    static dateToTime (date, locate = 'pt-BR'){
+
+        return date.toLocaleTimeString(locate, {
+
+            hours: '2-digit',
+            minutes: '2-digit'
+
+        });
+
+    }
+
+    static TimeStampToTime(timeStamp){
+
+        return (timeStamp && typeof timeStamp.toDate == 'function') ? Format.dateToTime(timeStamp.toDate()) : '';
+
+    }
 }
