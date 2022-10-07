@@ -81,7 +81,6 @@ export class WhatsAppController{
                 let div = document.createElement('div');
 
                 div.className = 'contact-item'
-                console.log(contact.name);
                 div.innerHTML = `
                 <div class="dIyEr">
                 <div class="_1WliW" style="height: 49px; width: 49px;">
@@ -317,6 +316,22 @@ export class WhatsAppController{
     }
 
     initEvents(){
+
+        this.el.inputSearchContacts.on('keyup', e=>{
+
+            if(this.el.inputSearchContacts.value.length > 0){
+
+                this.el.inputSearchContactsPlaceholder.hide();
+
+            }else{
+
+                this.el.inputSearchContactsPlaceholder.show();
+
+            };
+                
+            this._user.getContacts(this.el.inputSearchContacts.value);
+
+        });
 
         this.el.myPhoto.on('click', e=>{
 
