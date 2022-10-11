@@ -49,11 +49,13 @@ export class DocumentPreviewController{
 
                                 let viewport = page.getViewport(1);
 
+                                console.log(viewport);
+
                                 let canvas = document.createElement('canvas');
                                 let canvasContext = canvas.getContext('2d');
 
                                 canvas.width = viewport.width;
-                                canvas.hieght = viewport.hieght;
+                                canvas.height = viewport.height;
 
                                 page.render({
 
