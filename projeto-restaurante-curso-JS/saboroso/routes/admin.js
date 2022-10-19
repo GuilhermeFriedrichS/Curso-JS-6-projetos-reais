@@ -182,20 +182,23 @@ router.get("/users", function(req, res, next){
 });
 router.post("/users", function(req, res, next){
 
-    res.save(req.fields).then(results=>{
+    users.save(req.fields).then(results=>{
+
+        console.log('RESULTESSSSSSS '+results);
 
         res.send(results);
 
     }).catch(err=>{
 
+        console.log('erroooooooooo '+err);
         res.send(err);
 
     });
 
 });
-router.delete("/users:id", function(req, res, next){
+router.delete("/users/:id", function(req, res, next){
 
-    res.save(req.params.id).then(results=>{
+    users.delete(req.params.id).then(results=>{
 
         res.send(results);
 

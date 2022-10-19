@@ -51,7 +51,7 @@ module.exports = {
         return new Promise ((resolve, reject) => {
 
             conn.query(`
-                SELECT * FROM tb_users ORDER BY title
+                SELECT * FROM tb_users ORDER BY name
             `, (err, results) => {
 
                 if(err){
@@ -67,23 +67,24 @@ module.exports = {
 
     },
 
-    save(fields, files){
+    save(fields){
         
         return new Promise((resolve, reject)=>{
 
-            let query, queryPhoto = '', params = [
+            let query, params = [
                 fields.name,
                 fields.email
             ];
 
+            
             if(parseInt(fields.id) > 0){
-
+             
                 params.push(fields.id);
-
+                
                 query = `
                     UPDATE tb_users
                     SET name = ?,
-                        email = ?,
+                        email = ?
                     WHERE id = ?
                 `;
 
@@ -113,8 +114,10 @@ module.exports = {
     },
 
     delete(id){
-
+        
         return new Promise ((resolve, reject) => {
+
+            
 
             conn.query(`
                 DELETE FROM tb_users WHERE id = ?
