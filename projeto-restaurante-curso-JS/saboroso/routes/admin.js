@@ -184,18 +184,32 @@ router.post("/users", function(req, res, next){
 
     users.save(req.fields).then(results=>{
 
-        console.log('RESULTESSSSSSS '+results);
-
         res.send(results);
 
     }).catch(err=>{
 
-        console.log('erroooooooooo '+err);
         res.send(err);
 
     });
 
 });
+
+router.post("/users/password-change", function(req, res, next){
+
+    users.changePassword(req).then(results=>{
+
+        res.send(results);
+
+    }).catch(err=>{
+
+        res.send({
+            error:err
+        });
+
+    });
+
+});
+
 router.delete("/users/:id", function(req, res, next){
 
     users.delete(req.params.id).then(results=>{
